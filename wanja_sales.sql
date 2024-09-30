@@ -30,6 +30,70 @@ CREATE TABLE `sales` (
   `Amount` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`SaleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE sales (
+    SaleID INT PRIMARY KEY,         
+    ProductID INT,                  
+    CustomerID INT,                 
+    SaleDate DATE,                  
+    Amount DECIMAL(10, 2)           
+);
+
+
+INSERT INTO sales (SaleID, ProductID, CustomerID, SaleDate, Amount)
+VALUES
+(1, 401, 1001, '2024-01-15', 250.75),
+(2, 402, 1002, '2024-02-20', 340.50),
+(3, 401, 1003, '2024-02-22', 150.00),
+(4, 403, 1001, '2024-03-05', 500.00),
+(5, 404, 1002, '2024-03-10', 750.25),
+(6, 405, 1003, '2024-03-15', 650.00),
+(7, 402, 1004, '2024-04-01', 300.40),
+(8, 401, 1001, '2024-04-12', 420.75),
+(9, 405, 1005, '2024-05-05', 200.60),
+(10, 403, 1001, '2024-05-15', 800.00),
+(11, 401, 1002, '2024-06-01', 150.00),
+(12, 404, 1005, '2024-06-10', 900.10),
+(13, 401, 1001, '2024-06-15', 320.75),
+(14, 402, 1004, '2024-07-05', 275.30),
+(15, 405, 1003, '2024-07-18', 500.50),
+(16, 403, 1005, '2024-08-01', 600.00),
+(17, 402, 1002, '2024-08-12', 725.80),
+(18, 404, 1004, '2024-08-20', 350.90);
+
+SELECT 
+    ProductID,
+    SUM(Amount) AS TotalSales
+FROM 
+    sales
+GROUP BY 
+    ProductID;
+
+
+SELECT 
+    YEAR(SaleDate) AS SaleYear,
+    MONTH(SaleDate) AS SaleMonth,
+    SUM(Amount) AS TotalSales
+FROM 
+    sales
+GROUP BY 
+    YEAR(SaleDate), 
+    MONTH(SaleDate)
+ORDER BY 
+    SaleYear, SaleMonth;
+
+
+SELECT 
+    CustomerID,
+    COUNT(SaleID) AS NumberOfPurchases
+FROM 
+    sales
+GROUP BY 
+    CustomerID
+HAVING 
+    COUNT(SaleID) > 5;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
